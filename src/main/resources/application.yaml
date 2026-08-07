@@ -1,3 +1,16 @@
 spring:
   application:
     name: ai-queue-advisory-system
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
