@@ -1,5 +1,6 @@
 package com.mihirjha.cloudai.queue.api.exception;
 
+import com.mihirjha.cloudai.queue.api.response.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleValidationException(
+    public ApiError handleValidationException(
             MethodArgumentNotValidException exception) {
 
         Map<String, String> errors = exception.getBindingResult()
@@ -26,8 +27,7 @@ public class GlobalExceptionHandler {
                         (first, second) -> first
                 ));
 
-        return new ErrorResponse(
-                false,
+        return ApiError.failure(
                 "VALIDATION_ERROR",
                 "Request validation failed",
                 errors
@@ -36,21 +36,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleException(Exception exception) {
+    public ApiError handleException(Exception exception) {
 
-        return new ErrorResponse(
-                false,
+        return ApiError.failure(
                 "INTERNAL_SERVER_ERROR",
                 "An unexpected error occurred",
                 Map.of()
         );
-    }
-
-    public record ErrorResponse(
-            boolean success,
-            String code,
-            String message,
-            Map<String, String> errors
-    ) {
     }
 }
