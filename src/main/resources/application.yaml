@@ -8,6 +8,7 @@ server:
 logging:
   level:
     root: INFO
+    com.mihirjha.cloudai.queue: INFO
 
 management:
   endpoints:

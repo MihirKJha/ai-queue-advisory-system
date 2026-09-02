@@ -3,4 +3,4 @@ spring:
 
 logging:
   level:
-    com.mihirjha.cloudai: DEBUG
+     com.mihirjha.cloudai.queue: DEBUG
