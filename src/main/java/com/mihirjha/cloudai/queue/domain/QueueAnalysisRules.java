@@ -1,11 +1,14 @@
 package com.mihirjha.cloudai.queue.domain;
 
 import com.mihirjha.cloudai.queue.domain.enums.ImageFormat;
+import com.mihirjha.cloudai.queue.domain.enums.QueueStatus;
+import com.mihirjha.cloudai.queue.domain.enums.RecommendationType;
 import com.mihirjha.cloudai.queue.domain.exception.InvalidQueueImageException;
 import com.mihirjha.cloudai.queue.domain.exception.InvalidWaitingTimeException;
 import com.mihirjha.cloudai.queue.domain.exception.QueueAnalysisException;
 import com.mihirjha.cloudai.queue.domain.valueobject.AvailableTime;
 import com.mihirjha.cloudai.queue.domain.valueobject.ServiceDuration;
+import com.mihirjha.cloudai.queue.domain.valueobject.WaitTime;
 
 public final class QueueAnalysisRules {
 
@@ -80,6 +83,52 @@ public final class QueueAnalysisRules {
         validateServiceDuration(serviceDuration);
 
         return peopleCount * serviceDuration.minutes();
+    }
+
+    public static QueueStatus determineQueueStatus(int peopleCount) {
+
+        if (peopleCount < 0) {
+            throw new QueueAnalysisException(
+                    "People count cannot be negative");
+        }
+
+        if (peopleCount <= 5) {
+            return QueueStatus.LOW;
+        }
+
+        if (peopleCount <= 10) {
+            return QueueStatus.MODERATE;
+        }
+
+        return QueueStatus.HIGH;
+    }
+
+    public static RecommendationType determineRecommendation(
+            QueueStatus queueStatus,
+            WaitTime estimatedWaitTime,
+            AvailableTime availableTime) {
+
+        if (queueStatus == null) {
+            throw new QueueAnalysisException(
+                    "Queue status must not be null");
+        }
+
+        if (estimatedWaitTime == null) {
+            throw new QueueAnalysisException(
+                    "Estimated wait time must not be null");
+        }
+
+        validateAvailableTime(availableTime);
+
+        if (queueStatus == QueueStatus.HIGH) {
+            return RecommendationType.AVOID;
+        }
+
+        if (estimatedWaitTime.minutes() <= availableTime.minutes()) {
+            return RecommendationType.PROCEED;
+        }
+
+        return RecommendationType.WAIT;
     }
 
 }
