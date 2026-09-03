@@ -1,6 +1,6 @@
 package com.mihirjha.cloudai.queue.api.controller;
 
-import com.mihirjha.cloudai.queue.api.request.ValidationTestRequest;
+import com.mihirjha.cloudai.queue.api.request.AnalyzeQueueRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class ValidationTestController {
 
     @PostMapping("/validation")
-    public String validate(@Valid @RequestBody ValidationTestRequest request) {
+    public String validate(@Valid @RequestBody AnalyzeQueueRequest request) {
         return "Validation successful";
     }
 }

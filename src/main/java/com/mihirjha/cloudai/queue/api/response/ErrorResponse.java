@@ -3,7 +3,7 @@ package com.mihirjha.cloudai.queue.api.response;
 import java.time.Instant;
 import java.util.Map;
 
-public record ApiError(
+public record ErrorResponse(
         boolean success,
         Instant timestamp,
         String code,
@@ -11,12 +11,12 @@ public record ApiError(
         Map<String, String> details
 ) {
 
-    public static ApiError failure(
+    public static ErrorResponse failure(
             String code,
             String message,
             Map<String, String> details) {
 
-        return new ApiError(
+        return new ErrorResponse(
                 false,
                 Instant.now(),
                 code,
