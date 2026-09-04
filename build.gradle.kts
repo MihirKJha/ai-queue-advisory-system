@@ -18,17 +18,30 @@ repositories {
 }
 
 dependencies {
+	implementation(platform("software.amazon.awssdk:bom:2.53.1"))
+
+	implementation("software.amazon.awssdk:s3")
+	implementation("software.amazon.awssdk:rekognition")
+	implementation("software.amazon.awssdk:bedrockruntime")
+
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
+
 	compileOnly("org.projectlombok:lombok")
+
 	annotationProcessor("org.projectlombok:lombok")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-validation-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+
 	testCompileOnly("org.projectlombok:lombok")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	
 	testAnnotationProcessor("org.projectlombok:lombok")
 }
 

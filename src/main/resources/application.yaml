@@ -18,3 +18,8 @@ management:
   endpoint:
     health:
       show-details: never
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  s3:
+    bucket-name: ${AWS_S3_BUCKET_NAME:ai-queue-advisory-images}      
