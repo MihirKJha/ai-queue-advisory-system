@@ -1,0 +1,10 @@
+Analyze the following queue situation and provide a concise
+customer-facing recommendation.
+
+People in queue: {peopleCount}
+Estimated wait time: {estimatedWaitTimeMinutes} minutes
+Queue status: {queueStatus}
+Available time: {availableTimeMinutes} minutes
+Initial recommendation: {recommendationType}
+
+Explain the recommendation clearly and concisely.
