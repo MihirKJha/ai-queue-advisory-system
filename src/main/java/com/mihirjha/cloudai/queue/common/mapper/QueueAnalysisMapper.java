@@ -1,6 +1,6 @@
 package com.mihirjha.cloudai.queue.common.mapper;
 
-import com.mihirjha.cloudai.queue.api.response.AnalyzeQueueResponse;
+import com.mihirjha.cloudai.queue.api.response.AnalyzeQueueApiResponse;
 import com.mihirjha.cloudai.queue.domain.model.QueueAdvice;
 import com.mihirjha.cloudai.queue.domain.model.QueueAnalysis;
 import com.mihirjha.cloudai.queue.domain.model.QueueMetrics;
@@ -23,15 +23,16 @@ public class QueueAnalysisMapper {
          * @param analysis completed queue analysis
          * @return API response representation
          */
-        public AnalyzeQueueResponse toResponse(
+        public AnalyzeQueueApiResponse toResponse(
                         QueueAnalysis analysis) {
 
                 QueueMetrics metrics = analysis.queueMetrics();
                 QueueAdvice advice = analysis.queueAdvice();
 
-                return new AnalyzeQueueResponse(
+                return new AnalyzeQueueApiResponse(
                                 analysis.analysisId(),
                                 analysis.analyzedAt(),
+                                analysis.queueImage().reference(),
                                 metrics.peopleCount().value(),
                                 metrics.estimatedWaitTimeMinutes().minutes(),
                                 metrics.status(),

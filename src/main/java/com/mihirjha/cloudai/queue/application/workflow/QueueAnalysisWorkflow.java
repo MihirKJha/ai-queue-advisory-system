@@ -16,6 +16,8 @@ import com.mihirjha.cloudai.queue.domain.valueobject.WaitTime;
 import com.mihirjha.cloudai.queue.ports.outbound.LLMProvider;
 import com.mihirjha.cloudai.queue.ports.outbound.StorageProvider;
 import com.mihirjha.cloudai.queue.ports.outbound.VisionProvider;
+import com.mihirjha.cloudai.queue.application.service.QueueAnalysisApplicationException;
+import com.mihirjha.cloudai.queue.domain.exception.QueueAnalysisException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -52,8 +54,39 @@ public class QueueAnalysisWorkflow {
          *
          * @param command application command containing image and queue parameters
          * @return completed queue analysis
+         * @throws QueueAnalysisException            when a domain validation or
+         *                                           business rule fails
+         * @throws QueueAnalysisApplicationException when an infrastructure or
+         *                                           unexpected application failure
+         *                                           occurs
          */
         public QueueAnalysis execute(AnalyzeQueueCommand command) {
+
+                try {
+                        return executeWorkflow(command);
+
+                } catch (QueueAnalysisException exception) {
+                        throw exception;
+
+                } catch (QueueAnalysisApplicationException exception) {
+                        throw exception;
+
+                } catch (RuntimeException exception) {
+                        log.error("Queue analysis workflow failed: fileName={}",
+                                        command.fileName(), exception);
+                        throw new QueueAnalysisApplicationException(
+                                        "Queue analysis could not be completed",
+                                        exception);
+                }
+        }
+
+        /**
+         * Executes the internal queue analysis workflow.
+         *
+         * @param command application command containing image and queue parameters
+         * @return completed queue analysis
+         */
+        private QueueAnalysis executeWorkflow(AnalyzeQueueCommand command) {
 
                 log.info("Executing queue analysis workflow: fileName={}",
                                 command.fileName());
