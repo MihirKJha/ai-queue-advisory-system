@@ -35,3 +35,35 @@ out/
 
 ### VS Code ###
 .vscode/
+.idea/
+
+# ==============================
+# Vaadin generated frontend files
+# ==============================
+
+.frontend/
+.vaadin/
+node_modules/
+
+# Generated frontend files
+src/main/bundles/prod.bundle.*
+src/main/frontend/generated/
+src/main/frontend/generated-flow-imports.js
+
+# Vaadin generated files
+src/main/resources/META-INF/VAADIN/
+
+# ==============================
+# Build artifacts
+# ==============================
+
+build/
+.gradle/
+
+# ==============================
+# OS files
+# ==============================
+
+.DS_Store
+Thumbs.db
+desktop.ini
